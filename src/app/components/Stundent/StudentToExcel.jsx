@@ -3,6 +3,7 @@ import { fetchStudents } from "../../../../sanity/utils/fetchStudents";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import fs from 'fs';
+import Link from 'next/link';
 
 async function StudentToExcel() {
   const students = await fetchStudents();
@@ -14,16 +15,20 @@ async function StudentToExcel() {
     content = <div>No se encontraron estudiantes</div>;
   } else {
     // JSON SECTION
-    const studentsData = students.map((student) => {
-      const sheetData = student.sheets.map((sheet) => ({
-        name: student.name,
-        sheetName: sheet.sheetName,
-        observations: (sheet.observations || []).map((observation) =>
-          observation.children ? observation.children.map(child => child.text).join(' ') : 'Observación sin contenido'
-        ).join(', ')
-      }));
-      return sheetData;
-    }).flat();
+    let lastStudentName = null;
+    const studentsData = students.flatMap((student) =>
+      student.sheets.map((sheet) => {
+        const name = student.name === lastStudentName ? '' : student.name;
+        lastStudentName = student.name;
+        return {
+          name: name,
+          sheetName: sheet.sheetName,
+          observations: (sheet.observations || []).map((observation) =>
+            observation.children ? observation.children.map(child => child.text).join(' ') : 'Observación sin contenido'
+          ).join(', ')
+        };
+      })
+    );
 
     // EXCEL FUNCTION SECTION
     const convertToExcel = (studentsData) => {
@@ -43,7 +48,11 @@ async function StudentToExcel() {
 
     // CONSOLE SECTION
     console.log(JSON.stringify(studentsData, null, 2));
-    content = <div>Datos de estudiantes convertidos a array y impresos en la consola</div>;
+    content = <div>
+      Datos de estudiantes convertidos a array, impresos en la consola<br />
+      y guardados como estudiantes.xlsx dentro del proyecto
+      <Link href={'excel-merge'} className='underline text-blue-500'>Excel Merge</Link>
+    </div>;
   }
 
   return content;

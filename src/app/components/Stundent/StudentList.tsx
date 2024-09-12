@@ -1,5 +1,6 @@
 import { PortableText } from "next-sanity";
 import { fetchStudents } from "../../../../sanity/utils/fetchStudents";
+import Link from "next/link";
 
 async function StudentList() {
   const students = await fetchStudents();
@@ -9,6 +10,12 @@ async function StudentList() {
 
   return (
     <div>
+      <Link
+        href={"http://localhost:3000/excel"}
+        className="text-blue-600 underline"
+      >
+        StudentToExcel
+      </Link>
       <table
         style={{
           border: "1px solid black",
