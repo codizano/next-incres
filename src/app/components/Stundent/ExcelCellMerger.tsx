@@ -24,7 +24,7 @@ const ExcelCellMerger: React.FC = () => {
       if (e.target && e.target.result) {
         const data = new Uint8Array(e.target.result as ArrayBuffer);
         const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
+        const sheetName = workbook.SheetNames[0]; // obteniene el nombre de la primera hoja de la hoja
         const worksheet = workbook.Sheets[sheetName];
 
         const range = XLSX.utils.decode_range(worksheet["!ref"] || "A1");

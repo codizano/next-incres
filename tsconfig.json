@@ -27,7 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/components/Stundent/StudentList.tsx",
-    "src/app/components/Stundent/StudentToExcel.jsx"
+    "src/app/components/Stundent/StudentToExcel.tsx"
   ],
   "exclude": ["node_modules"]
 }

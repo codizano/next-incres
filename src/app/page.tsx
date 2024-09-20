@@ -1,5 +1,5 @@
 import StudentList from "./components/Stundent/StudentList";
-import ExcelExporter from "./components/Stundent/ExcelExporter";
+//import ExcelExporter from "./components/Stundent/ExcelExporter";
 
 export default function Home() {
   return (
