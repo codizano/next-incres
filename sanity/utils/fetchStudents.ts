@@ -2,7 +2,7 @@ import { client } from "../../sanity/config/client";
 import { groq } from "next-sanity";
 import { Student } from "../../types/Student";
 
-const getAllStudentQuery = groq`*[ _type == "student"]  | order(name asc){
+const getAllStudentQuery = groq`*[ _type == "student"   && increscendo == true]  | order(name asc){
   _id,
   name,
   sheets[]{
