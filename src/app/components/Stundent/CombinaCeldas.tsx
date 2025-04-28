@@ -16,11 +16,11 @@ const CombinaCeldas: React.FC<Props> = ({
   const combinaCeldas = () => {
     const archivoExcel = XLSX.readFile(archivo);
     const hojaTrabajo = archivoExcel.Sheets["Hoja1"];
-    XLSX.utils.mergeCells(
-      hojaTrabajo,
-      `${columna}${filaInicio}:${columna}${filaFin}`,
-      "h"
-    );
+    if (!hojaTrabajo["!merges"]) hojaTrabajo["!merges"] = [];
+    hojaTrabajo["!merges"].push({
+      s: { r: filaInicio - 1, c: columna.charCodeAt(0) - 65 },
+      e: { r: filaFin - 1, c: columna.charCodeAt(0) - 65 },
+    });
     XLSX.writeFile(archivoExcel, archivo);
   };
 
